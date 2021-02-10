@@ -1,4 +1,6 @@
+const dotenv = require("dotenv").config();
+
 module.exports = {
-  secret: "application-secret-key",
-  database: "mongodb://localhost:27017/ExpressAPI",
+  secret: process.env.DB_SECRET,
+  database: process.env.DB_PATH,
 };

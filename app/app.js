@@ -4,6 +4,7 @@ const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const config = require("./config");
+const dotenv = require("dotenv").config();
 
 // body-parser 設定
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +13,6 @@ app.use(bodyParser.json());
 // DB設定
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database, { userNewUrlParser: true });
-// app.set("secretKey", config.secret);
 mongoose.connection.on("error", (err) => {
   console.error("MongoDB connection error:", err);
   process.exit(-1);
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, authorization"
   );
   next();
 });
@@ -38,5 +38,6 @@ app.use("/api/v1", router);
 
 // start up server
 app.listen(port, () => {
+  console.log("env:", process.env.KEY_APPLE);
   console.log("Listen on port:", port);
 });

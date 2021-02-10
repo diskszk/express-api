@@ -9,7 +9,6 @@ app.set("secretKey", config.secret);
 
 router.post("/", (req, res) => {
   // リクエストパラメーターから名前を取り出して検索する
-  console.log("name:", req.body.name);
   AuthenticatedUserModel.findOne(
     {
       name: req.body.name,
@@ -35,6 +34,7 @@ router.post("/", (req, res) => {
             success: true,
             token: token,
           });
+          
         }
       } else {
         res.json({ success: false, message: "ユーザーがいません" });

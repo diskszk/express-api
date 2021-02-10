@@ -2,9 +2,12 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 
 function verifyToken(req, res, next) {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
+  // const token =
+  //   req.body.token || req.query.token || req.headers["x-access-token"];
 
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+  
   if (token) {
     // jwt認証を行う
     jwt.verify(token, config.secret, (err, decoded) => {
